@@ -1,0 +1,21 @@
+<launch>
+        <include file="$(find mhri)/launch/brinup_core.launch">
+                <arg name="project_path" value="$(find boxy_robot)" />
+        </include>
+
+        <include file="$(find motion_renderer)/launch/bringup_renderer.launch">
+                <arg name="fake_render_speech" value="false" />
+        </include>
+
+        <include file="$(find google_cloud_speech)/launch/bringup.launch" />
+        <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
+
+        <node name="dialog" type="dialog.py" pkg="mhri_dialog" output="screen">
+                <param name="script_path" value="$(find boxy_robot)/scripts"/>
+        </node>
+
+        <node name="naver_speech" type="speech_node.py" pkg="render_speech_naver_voice_tts" output="screen">
+                <param name="config_file" value="$(find render_speech_naver_voice_tts)/config/config_file"/>
+        </node>
+</launch>
+
