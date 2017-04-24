@@ -1,0 +1,21 @@
+[submodule "mhri"]
+	path = mhri
+	url = https://github.com/mhri/mhri.git
+[submodule "examples_social_perceptions"]
+	path = examples_social_perceptions
+	url = https://github.com/mhri/examples_social_perceptions.git
+[submodule "mhri_tools"]
+	path = mhri_tools
+	url = https://github.com/mhri/mhri_tools.git
+[submodule "mhri_dialog"]
+	path = mhri_dialog
+	url = https://github.com/mhri/mhri_dialog.git
+[submodule "examples_sensory_perceptions"]
+	path = examples_sensory_perceptions
+	url = https://github.com/mhri/examples_sensory_perceptions.git
+[submodule "mhri_social_msgs"]
+	path = mhri_social_msgs
+	url = https://github.com/mhri/mhri_social_msgs.git
+[submodule "examples_mhri_renderer"]
+	path = examples_mhri_renderer
+	url = https://github.com/mhri/examples_mhri_renderer.git
