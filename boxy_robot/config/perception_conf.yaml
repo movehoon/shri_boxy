@@ -1,0 +1,13 @@
+# target_memory:
+#     social_perception_name
+#         events: ['event1', 'event2', ...]
+#         data:
+#             perception_data1: initial_value1
+#             perception_data2: initial_value2
+
+touch_activity:
+    target_memory: 'social_event_memory'
+    events: ['head_touched', 'l_hand_touched', 'r_hand_touched']
+    data:
+        touched_part: ''
+
