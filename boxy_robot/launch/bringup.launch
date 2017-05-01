@@ -22,8 +22,10 @@
 <!--        <node pkg="boxy_robot" type="behavior.py" name="boxy_behavior" output="screen" /> -->
 <!--        <node pkg="boxy_robot" type="idle_motion.py" name="boxy_idle_motion" output="screen" /> -->
         <node pkg="boxy_robot" type="touch_sensor.py" name="boxy_touch_sensor" output="screen">
-            <param name="config_file" value="$(find boxy_robot)/config/perception_conf.yaml" />
+            <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />
         </node>
-<!--        <node pkg="boxy_robot" type="rotation_sensor.py" name="boxy_rotation_sensor" output="screen" /> -->
+        <node pkg="boxy_robot" type="rotation_sensor.py" name="boxy_rotation_sensor" output="screen">
+            <param name="config_file" value="$(find boxy_robot)/config/perception_rotation_conf.yaml" />
+        </node>
 </launch>
 

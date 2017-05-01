@@ -11,3 +11,28 @@
 
 + e:head-touched
 - head touched
+
++ e:l-hand-touched
+- left hand touched
+
++ e:r-hand-touched
+- right hand touched
+
++ e:top-up
+- top side is up
+
++ e:front-up
+- front side is up
+
++ e:rear-up
+- rear side is up
+
++ e:right-up
+- right side is up
+
++ e:left-up
+- left side is up
+
++ e:bottom-up
+- bottom side is up
+
