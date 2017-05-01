@@ -77,26 +77,32 @@ class BoxyRotation(PerceptionBase, Thread):
             write_data['rotation_z'] = rot_z
 
             if rx0==0 and ry0==0 and rz0==0 and self.rotation!=RotationActivity.TOP_UP:
+                self.rotation = RotationActivity.TOP_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'top_up')
 
             elif rx0==0 and ry1==1 and rz1==1 and self.rotation!=RotationActivity.FRONT_UP:
+                self.rotation = RotationActivity.FRONT_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'front_up')
 
             elif rx0==0 and ry1==-1 and rz1==1 and self.rotation!=RotationActivity.REAR_UP:
+                self.rotation = RotationActivity.REAR_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'rear_up')
 
             elif rx1==-1 and ry0==0 and rz1==1 and self.rotation!=RotationActivity.RIGHT_UP:
+                self.rotation = RotationActivity.RIGHT_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'right_up')
 
             elif rx1==1 and ry0==0 and rz1==1 and self.rotation!=RotationActivity.LEFT_UP:
+                self.rotation = RotationActivity.LEFT_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'left_up')
 
             elif rx0==0 and ry0==0 and rz1==2 and self.rotation!=RotationActivity.BOTTOM_UP:
+                self.rotation = RotationActivity.BOTTOM_UP
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'bottom_up')
 
