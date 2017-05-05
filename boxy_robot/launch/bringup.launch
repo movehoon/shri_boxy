@@ -5,11 +5,12 @@
 
         <include file="$(find motion_renderer)/launch/bringup_renderer.launch">
                 <arg name="fake_render_speech" value="false" />
-		<arg name="fake_render_sound" value="false" />
+                <arg name="fake_render_gesture" value="false" />
         </include>
 
-
+<!--
         <include file="$(find google_cloud_speech)/launch/bringup.launch" />
+-->
         <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
         
         <node name="dialog" type="dialog.py" pkg="mhri_dialog" output="screen">
@@ -20,7 +21,7 @@
                 <param name="config_file" value="$(find render_speech_naver_voice_tts)/config/config_file"/>
         </node>
 
-<!--        <node pkg="boxy_robot" type="behavior.py" name="boxy_behavior" output="screen" /> -->
+        <node pkg="boxy_robot" type="behavior.py" name="boxy_behavior" output="screen" />
 <!--        <node pkg="boxy_robot" type="idle_motion.py" name="boxy_idle_motion" output="screen" /> -->
         <node pkg="boxy_robot" type="touch_sensor.py" name="boxy_touch_sensor" output="screen">
             <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />

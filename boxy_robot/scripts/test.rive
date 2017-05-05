@@ -10,7 +10,7 @@
 - 반가워
 
 + e:head-touched
-- head touched
+- head touched <sm=mobility/move:forward>
 
 + e:l-hand-touched
 - left hand touched
@@ -19,7 +19,7 @@
 - right hand touched
 
 + e:top-up
-- top side is up
+- top side is up <sm=mobility/move:stop>
 
 + e:front-up
 - front side is up

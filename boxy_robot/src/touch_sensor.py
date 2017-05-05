@@ -60,7 +60,7 @@ class BoxyTouch(PerceptionBase, Thread):
 	        write_data = self.conf_data['touch_activity']['data']
                 write_data['touched_part'] = TouchActivity.HEAD
                 write_data['state'] = not self.head_touched
-                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'head_touched')
 
             if self.left_arm_touched != self.left_arm_touched_prev:
@@ -68,7 +68,7 @@ class BoxyTouch(PerceptionBase, Thread):
                 write_data = self.conf_data['touch_activity']['data']
                 write_data['touched_part'] = TouchActivity.L_HAND
                 write_data['state'] = not self.left_arm_touched
-                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'l_hand_touched')
 
             if self.right_arm_touched != self.right_arm_touched_prev:
@@ -76,7 +76,7 @@ class BoxyTouch(PerceptionBase, Thread):
                 write_data = self.conf_data['touch_activity']['data']
                 write_data['touched_part'] = TouchActivity.R_HAND
                 write_data['state'] = not self.right_arm_touched
-                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'r_hand_touched')
 
             self.backupTouchStatus()
