@@ -9,9 +9,10 @@ import time
 
 from perception_core.perception_base import PerceptionBase
 
-from mhri_social_msgs.msg import TouchActivity
-from std_msgs.msg import Bool
 
+HEAD = 0
+LEFT_HAND = 1
+RIGHT_HAND = 2
 
 PIN_HEAD = '6'
 PIN_LEFT_ARM = '10'
@@ -55,28 +56,28 @@ class BoxyTouch(PerceptionBase, Thread):
             self.refreshTouchStatus()
             #rospy.loginfo('head: ' + str(self.head_touched) + ' prev: ' + str(self.head_touched_prev));
 
-            if self.head_touched != self.head_touched_prev:
+            if self.head_touched and not self.head_touched_prev:
                 rospy.loginfo('tactile head touched');
 	        write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = TouchActivity.HEAD
+                write_data['touched_part'] = HEAD
                 write_data['state'] = not self.head_touched
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'head_touched')
 
-            if self.left_arm_touched != self.left_arm_touched_prev:
+            if self.left_arm_touched and not self.left_arm_touched_prev:
                 rospy.loginfo('tactile left hand touched');
                 write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = TouchActivity.L_HAND
+                write_data['touched_part'] = LEFT_HAND
                 write_data['state'] = not self.left_arm_touched
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'l_hand_touched')
 
-            if self.right_arm_touched != self.right_arm_touched_prev:
+            if self.right_arm_touched and not self.right_arm_touched_prev:
                 rospy.loginfo('tactile right hand touched');
                 write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = TouchActivity.R_HAND
+                write_data['touched_part'] = RIGHT_HAND
                 write_data['state'] = not self.right_arm_touched
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'r_hand_touched')
 
             self.backupTouchStatus()

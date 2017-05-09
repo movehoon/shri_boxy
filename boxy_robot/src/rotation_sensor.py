@@ -8,15 +8,19 @@ import time
 
 from perception_core.perception_base import PerceptionBase
 
-from mhri_social_msgs.msg import RotationActivity
-from std_msgs.msg import Bool
-
 import smbus
 import math
 
 # Power management registers
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
+
+TOP_UP = 0
+FRONT_UP = 1
+REAR_UP = 2
+RIGHT_UP = 3
+LEFT_UP = 4
+BOTTOM_UP = 5
 
 class BoxyRotation(PerceptionBase, Thread):
     "Sends callbacks for rotation changed event"
@@ -26,13 +30,17 @@ class BoxyRotation(PerceptionBase, Thread):
         Thread.__init__(self)
 
         # MPU6050 initialization
-        self.bus = smbus.SMBus(0) # or bus = smbus.SMBus(1) for Revision 2 boards
+        self.bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
         self.address = 0x68       # This is the address value read via the i2cdetect command
 
         # Now wake the 6050 up as it starts in sleep mode
         self.bus.write_byte_data(self.address, power_mgmt_1, 0)
 
-        self.rotation = RotationActivity.TOP_UP
+        self.rotation = TOP_UP
+        self.stable_count = 0
+        self.bak_x = 0
+        self.bak_y = 0
+        self.bak_z = 0
 
         # ROS initialization:
         rospy.init_node('boxy_rotation_sensor')
@@ -61,50 +69,74 @@ class BoxyRotation(PerceptionBase, Thread):
             rot_y = self.get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
             rot_z = self.get_z_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
 
-            #print ('%0.2f, %0.2f, %0.2f' %(rot_x, rot_y, rot_z))
+#            print ('%0.1f, %0.1f, %0.1f' %(rot_x, rot_y, rot_z))
 
-            rx0 = int(rot_x / 10)
-            ry0 = int(rot_y / 10)
-            rz0 = int(rot_z / 10)
+            rx = -100
+            if int(rot_x/20) == 0:
+                rx = int(rot_x/20)
+            if int(rot_x/70) != 0:
+                rx = int(rot_x/70)
 
-            rx1 = int(rot_x / 80)
-            ry1 = int(rot_y / 80)
-            rz1 = int(rot_z / 80)
+            ry = -100
+            if int(rot_y/20) == 0:
+                ry = int(rot_y/20)
+            if int(rot_y/70) != 0:
+                ry = int(rot_y/70)
 
-            write_data = self.conf_data['rotation_activity']['data']
-            write_data['rotation_x'] = rot_x
-            write_data['rotation_y'] = rot_y
-            write_data['rotation_z'] = rot_z
+            rz = -100
+            if int(rot_z/20) == 0:
+                rz = int(rot_z/20)
+            if int(rot_z/70) != 0:
+                rz = int(rot_z/70)
 
-            if rx0==0 and ry0==0 and rz0==0 and self.rotation!=RotationActivity.TOP_UP:
-                self.rotation = RotationActivity.TOP_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'top_up')
+#            print ('rx=%d, ry=%d, rz=%d' %(rx, ry, rz))
 
-            elif rx0==0 and ry1==1 and rz1==1 and self.rotation!=RotationActivity.FRONT_UP:
-                self.rotation = RotationActivity.FRONT_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'front_up')
+            if rx == self.bak_x and ry == self.bak_y and rz == self.bak_z:
+                self.stable_count = self.stable_count+1
 
-            elif rx0==0 and ry1==-1 and rz1==1 and self.rotation!=RotationActivity.REAR_UP:
-                self.rotation = RotationActivity.REAR_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'rear_up')
+                if self.stable_count > 5:
+                    self.stable_count = 0
+                    write_data = self.conf_data['rotation_activity']['data']
+                    write_data['rotation_x'] = rot_x
+                    write_data['rotation_y'] = rot_y
+                    write_data['rotation_z'] = rot_z
 
-            elif rx1==-1 and ry0==0 and rz1==1 and self.rotation!=RotationActivity.RIGHT_UP:
-                self.rotation = RotationActivity.RIGHT_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'right_up')
+                    if rx==0 and ry==0 and rz==0 and self.rotation!=TOP_UP:
+                        self.rotation = TOP_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'top_up')
 
-            elif rx1==1 and ry0==0 and rz1==1 and self.rotation!=RotationActivity.LEFT_UP:
-                self.rotation = RotationActivity.LEFT_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'left_up')
+                    elif rx==0 and ry==1 and rz==1 and self.rotation!=FRONT_UP:
+                        self.rotation = FRONT_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'front_up')
 
-            elif rx0==0 and ry0==0 and rz1==2 and self.rotation!=RotationActivity.BOTTOM_UP:
-                self.rotation = RotationActivity.BOTTOM_UP
-#                self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'bottom_up')
+                    elif rx==0 and ry==-1 and rz==1 and self.rotation!=REAR_UP:
+                        self.rotation = REAR_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'rear_up')
+
+                    elif rx==1 and ry==0 and rz==1 and self.rotation!=RIGHT_UP:
+                        self.rotation = RIGHT_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'right_up')
+
+                    elif rx==-1 and ry==0 and rz==1 and self.rotation!=LEFT_UP:
+                        self.rotation = LEFT_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'left_up')
+
+                    elif rx==0 and ry==0 and rz==2 and self.rotation!=BOTTOM_UP:
+                        self.rotation = BOTTOM_UP
+                        self.save_to_memory(self.conf_data.keys()[0], data=write_data)
+                        self.raise_event(self.conf_data.keys()[0], 'bottom_up')
+
+            else:
+                self.stable_count = 0
+
+            self.bak_x = rx
+            self.bak_y = ry
+            self.bak_z = rz
 
             time.sleep(0.1)
 
