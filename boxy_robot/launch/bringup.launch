@@ -1,4 +1,8 @@
 <launch>
+        <include file="$(find rosbridge_server)/launch/rosbridge_tcp.launch">
+                <arg name="port" value="9090"/>
+        </include> 
+
         <include file="$(find mhri)/launch/bringup_core.launch">
                 <arg name="project_path" value="$(find boxy_robot)" />
         </include>
@@ -8,9 +12,9 @@
                 <!--<arg name="fake_render_gesture" value="false" />-->
         </include>
 
-<!--
+
         <include file="$(find google_cloud_speech)/launch/bringup.launch" />
--->
+
         <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
         
         <node name="dialog" type="dialog.py" pkg="mhri_dialog" output="screen">
