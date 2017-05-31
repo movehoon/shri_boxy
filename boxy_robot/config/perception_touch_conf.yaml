@@ -7,7 +7,7 @@
 
 touch_activity:
     target_memory: 'social_events_memory'
-    events: ['head_touched', 'l_hand_touched', 'r_hand_touched']
+    events: ['front_head_touched', 'left_bumper_touched', 'right_bumper_touched']
     data:
         touched_part: ''
         state: false

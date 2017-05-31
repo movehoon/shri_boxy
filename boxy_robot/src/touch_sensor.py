@@ -10,9 +10,9 @@ import time
 from perception_core.perception_base import PerceptionBase
 
 
-HEAD = 0
-LEFT_HAND = 1
-RIGHT_HAND = 2
+HEAD_FRONT = 0
+BUMPER_LEFT = 1
+BUMPER_RIGHT = 2
 
 PIN_HEAD = '6'
 PIN_LEFT_ARM = '10'
@@ -56,29 +56,29 @@ class BoxyTouch(PerceptionBase, Thread):
             self.refreshTouchStatus()
             #rospy.loginfo('head: ' + str(self.head_touched) + ' prev: ' + str(self.head_touched_prev));
 
-            if self.head_touched and not self.head_touched_prev:
-                rospy.loginfo('tactile head touched');
+            if self.front_head_touched and not self.front_head_touched_prev:
+                rospy.loginfo('tactile front head touched');
 	        write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = HEAD
-                write_data['state'] = not self.head_touched
+                write_data['touched_part'] = HEAD_FRONT
+                write_data['state'] = not self.front_head_touched
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'head_touched')
+                self.raise_event(self.conf_data.keys()[0], 'front_head_touched')
 
-            if self.left_arm_touched and not self.left_arm_touched_prev:
-                rospy.loginfo('tactile left hand touched');
+            if self.left_bumper_touched and not self.left_bumper_touched_prev:
+                rospy.loginfo('tactile left bumper touched');
                 write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = LEFT_HAND
-                write_data['state'] = not self.left_arm_touched
+                write_data['touched_part'] = BUMPER_LEFT
+                write_data['state'] = not self.left_bumper_touched
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'l_hand_touched')
+                self.raise_event(self.conf_data.keys()[0], 'left_bumper_touched')
 
-            if self.right_arm_touched and not self.right_arm_touched_prev:
-                rospy.loginfo('tactile right hand touched');
+            if self.right_bumper_touched and not self.right_bumper_touched_prev:
+                rospy.loginfo('tactile right bumper touched');
                 write_data = self.conf_data['touch_activity']['data']
-                write_data['touched_part'] = RIGHT_HAND
-                write_data['state'] = not self.right_arm_touched
+                write_data['touched_part'] = BUMPER_RIGHT
+                write_data['state'] = not self.right_bumper_touched
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
-                self.raise_event(self.conf_data.keys()[0], 'r_hand_touched')
+                self.raise_event(self.conf_data.keys()[0], 'right_bumper_touched')
 
             self.backupTouchStatus()
             time.sleep(0.1)
@@ -89,15 +89,15 @@ class BoxyTouch(PerceptionBase, Thread):
 
 
     def refreshTouchStatus(self):
-        self.head_touched = int(os.popen('gpio read ' + PIN_HEAD).read())
-        self.left_arm_touched = int(os.popen('gpio read ' + PIN_LEFT_ARM).read())
-        self.right_arm_touched = int(os.popen('gpio read ' + PIN_RIGHT_ARM).read())
+        self.front_head_touched = int(os.popen('gpio read ' + PIN_HEAD).read())
+        self.left_bumper_touched = int(os.popen('gpio read ' + PIN_LEFT_ARM).read())
+        self.right_bumper_touched = int(os.popen('gpio read ' + PIN_RIGHT_ARM).read())
 
 
     def backupTouchStatus(self):
-        self.head_touched_prev = self.head_touched
-        self.left_arm_touched_prev = self.left_arm_touched
-        self.right_arm_touched_prev = self.right_arm_touched
+        self.front_head_touched_prev = self.front_head_touched
+        self.left_bumper_touched_prev = self.left_bumper_touched
+        self.right_bumper_touched_prev = self.right_bumper_touched
  
 
 if __name__ == '__main__':
