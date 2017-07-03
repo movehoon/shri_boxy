@@ -10,7 +10,7 @@ from mhri_msgs.msg import LogItem
 
 class LoggerExample:
     def __init__(self):
-        rospy.init_node('boxy_logger_example', anonymous=False)
+        rospy.init_node('boxy_logger_node', anonymous=False)
 
         try:
             path_param = rospy.get_param('~log_path')

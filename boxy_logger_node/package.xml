@@ -2,7 +2,7 @@
 <package>
   <name>boxy_logger_node</name>
   <version>0.0.0</version>
-  <description>The logger_example_node package</description>
+  <description>The boxy_logger_node package</description>
 
   <maintainer email="byeongkyu@gmail.com">Byeong-Kyu Ahn</maintainer>
   <author email="byeongkyu@gmail.com">Byeong-Kyu Ahn</author>

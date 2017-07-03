@@ -6,7 +6,7 @@ import rospy
 from threading import Thread
 import time
 
-from perception_core.perception_base import PerceptionBase
+from perception_base.perception_base import PerceptionBase
 
 import smbus
 import math
