@@ -1,7 +1,7 @@
 <launch>
-        <include file="$(find rosbridge_server)/launch/rosbridge_tcp.launch">
-                <arg name="port" value="9090"/>
-        </include> 
+	<include file="$(find rosbridge_server)/launch/rosbridge_tcp.launch">
+		<arg name="port" value="9090" />
+	</include>
 
         <include file="$(find mhri)/launch/bringup_core.launch">
                 <arg name="project_path" value="$(find boxy_robot)" />
@@ -12,14 +12,15 @@
                 <!--<arg name="fake_render_gesture" value="false" />-->
         </include>
 
-
+<!--
         <include file="$(find google_cloud_speech)/launch/bringup.launch" />
-
+-->
         <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
         
-        <node name="dialog" type="dialog.py" pkg="mhri_dialog" output="screen">
-                <param name="script_path" value="$(find boxy_robot)/scripts"/>
-        </node>
+        <!-- Dialog Functionality -->
+        <include file="$(find mhri_dialog)/launch/bringup.launch">
+            <arg name="script_path" value="$(find boxy_robot)/scripts" />
+        </include>
 
         <node name="naver_speech" type="speech_node.py" pkg="render_speech_naver_voice_tts" output="screen">
                 <param name="config_file" value="$(find render_speech_naver_voice_tts)/config/config_file"/>
@@ -27,11 +28,11 @@
 
         <!--<node pkg="boxy_robot" type="behavior.py" name="boxy_behavior" output="screen" />-->
 <!--        <node pkg="boxy_robot" type="idle_motion.py" name="boxy_idle_motion" output="screen" /> -->
-        <!--<node pkg="boxy_robot" type="touch_sensor.py" name="boxy_touch_sensor" output="screen">
+        <node pkg="boxy_robot" type="touch_sensor.py" name="boxy_touch_sensor" output="screen">
             <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />
         </node>
         <node pkg="boxy_robot" type="rotation_sensor.py" name="boxy_rotation_sensor" output="screen">
             <param name="config_file" value="$(find boxy_robot)/config/perception_rotation_conf.yaml" />
-        </node>-->
+        </node>
 </launch>
 

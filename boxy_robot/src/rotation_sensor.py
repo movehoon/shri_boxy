@@ -30,7 +30,7 @@ class BoxyRotation(PerceptionBase, Thread):
         Thread.__init__(self)
 
         # MPU6050 initialization
-        self.bus = smbus.SMBus(0) # or bus = smbus.SMBus(1) for Revision 2 boards
+        self.bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
         self.address = 0x68       # This is the address value read via the i2cdetect command
 
         # Now wake the 6050 up as it starts in sleep mode
