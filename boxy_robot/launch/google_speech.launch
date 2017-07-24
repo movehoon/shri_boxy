@@ -1,0 +1,4 @@
+<launch>
+        <include file="$(find google_cloud_speech)/launch/bringup.launch" />
+</launch>
+
