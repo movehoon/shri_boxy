@@ -1,0 +1,14 @@
+# target_memory:
+#     social_perception_name
+#         events: ['event1', 'event2', ...]
+#         data:
+#             perception_data1: initial_value1
+#             perception_data2: initial_value2
+
+touch_activity:
+    target_memory: 'social_events_memory'
+    events: ['front_head_touched', 'left_bumper_touched', 'right_bumper_touched']
+    data:
+        touched_part: ''
+        state: false
+

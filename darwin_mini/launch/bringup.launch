@@ -1,0 +1,41 @@
+<launch>
+        <arg name="motion_file" default="$(find darwin_mini)/config/motions.yaml"/>
+
+	<include file="$(find rosbridge_server)/launch/rosbridge_tcp.launch">
+		<arg name="port" value="9090" />
+	</include>
+
+        <include file="$(find mhri)/launch/bringup_core.launch">
+                <arg name="project_path" value="$(find boxy_robot)" />
+        </include>
+
+        <include file="$(find motion_renderer)/launch/bringup_renderer.launch">
+                 <arg name="fake_render_speech" value="false" /> 
+                <arg name="fake_render_gesture" value="false" />
+        </include>
+
+
+        <include file="$(find google_cloud_speech)/launch/bringup.launch" />
+        <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
+        
+        <!-- Dialog Functionality -->
+        <include file="$(find mhri_dialog)/launch/bringup.launch">
+            <arg name="script_path" value="$(find boxy_robot)/scripts" />
+        </include>
+
+         <node name="naver_speech" type="speech_node.py" pkg="render_speech_naver_voice_tts" output="screen">
+                <param name="config_file" value="$(find render_speech_naver_voice_tts)/config/config_file"/>
+        </node> 
+
+        <!-- launch Behavior -->
+        <node name="darwin_mini_gesture" type="render_gesture.py" pkg="darwin_mini" output="screen">
+                <param name="config_file" value="$(find darwin_mini)/config/perception_touch_conf.yaml" />
+                <param name="motion_file" value="$(arg motion_file)"/>
+        </node>
+
+        <node name="keyboard_events" type="keyboard_events.py" pkg="boxy_robot" output="screen">
+            <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />
+        </node>
+        
+</launch>
+

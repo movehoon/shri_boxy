@@ -1,0 +1,6 @@
+touch_sensor:
+    target_memory: 'social_events_memory'
+    events: ['front_head_touched', 'middle_head_touched', 'rear_head_touched', 'left_bumper_touched', \
+                'right_bumper_touched', 'robot_lifted', 'left_hand_touched', 'right_hand_touched']
+    data:
+        touched_part: ''
