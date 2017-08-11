@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package>
-  <name>boxy_logger_node</name>
+  <name>shri_logger_node</name>
   <version>0.0.0</version>
-  <description>The boxy_logger_node package</description>
+  <description>The shri_logger_node package</description>
 
-  <maintainer email="byeongkyu@gmail.com">Byeong-Kyu Ahn</maintainer>
-  <author email="byeongkyu@gmail.com">Byeong-Kyu Ahn</author>
+  <maintainer email="movehoon@gmail.com">Daniel Lee</maintainer>
+  <author email="movehoon@gmail.com">Daniel Lee</author>
 
   <license>BSD</license>
-  <url type="website">https://github.com/mhri/mhri/wiki</url>
+  <url type="website">https://github.com/movehoon/shri_boxy</url>
 
 
   <buildtool_depend>catkin</buildtool_depend>

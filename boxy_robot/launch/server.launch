@@ -24,7 +24,7 @@
                 <param name="config_file" value="$(find render_speech_naver_voice_tts)/config/config_file"/>
         </node>-->
 
-        <node name="log" type="logger_node.py" pkg="logger_example_node" output="screen">
+        <node name="log" type="logger_node.py" pkg="shri_logger_node" output="screen">
                 <param name="log_path" value="~/boxy.log"/>
         </node>
 </launch>
