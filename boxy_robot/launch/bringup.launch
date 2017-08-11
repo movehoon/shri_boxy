@@ -12,9 +12,9 @@
                 <!--<arg name="fake_render_gesture" value="false" />-->
         </include>
 
-<!--
+
         <include file="$(find google_cloud_speech)/launch/bringup.launch" />
--->
+
         <include file="$(find speech_recognizer_py)/launch/bringup_perception.launch"/>
         
         <!-- Dialog Functionality -->
@@ -33,6 +33,10 @@
         </node>
         <node pkg="boxy_robot" type="rotation_sensor.py" name="boxy_rotation_sensor" output="screen">
             <param name="config_file" value="$(find boxy_robot)/config/perception_rotation_conf.yaml" />
+        </node>
+
+        <node name="keyboard_events" type="keyboard_events.py" pkg="boxy_robot" output="screen">
+            <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />
         </node>
 </launch>
 

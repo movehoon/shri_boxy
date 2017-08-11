@@ -28,7 +28,7 @@
         </node> 
 
         <!-- launch Behavior -->
-        <node name="darwin_mini_gesture" type="render_gesture.py" pkg="darwin_mini" output="screen">
+        <node name="darwin_mini_task" type="darwin_mini.py" pkg="darwin_mini" output="screen">
                 <param name="config_file" value="$(find darwin_mini)/config/perception_touch_conf.yaml" />
                 <param name="motion_file" value="$(arg motion_file)"/>
         </node>
