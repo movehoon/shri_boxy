@@ -8,9 +8,9 @@ import rospy
 from mhri_msgs.msg import LogItem
 
 
-class LoggerExample:
+class ShriLogger:
     def __init__(self):
-        rospy.init_node('boxy_logger_node', anonymous=False)
+        rospy.init_node('shri_logger_node', anonymous=False)
 
         try:
             path_param = rospy.get_param('~log_path')
@@ -38,8 +38,14 @@ class LoggerExample:
             log_content += item + '\t'
 
         log_content += '\r\n'
+
+        print log_content
         self.log_file.write(log_content)
 
+    def stop(self):
+        self.log_file.close()
+
 if __name__ == '__main__':
-    m = LoggerExample()
+    m = ShriLogger()
     rospy.spin()
+    m.stop()

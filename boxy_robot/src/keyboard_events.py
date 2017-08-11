@@ -72,7 +72,6 @@ class KeyboardEvents(PerceptionBase, Thread):
                 self.save_to_memory(self.conf_data.keys()[0], data=write_data)
                 self.raise_event(self.conf_data.keys()[0], 'right_bumper_touched')
 
-
             time.sleep(0.1)
 
 

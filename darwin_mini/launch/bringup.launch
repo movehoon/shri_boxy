@@ -33,9 +33,15 @@
                 <param name="motion_file" value="$(arg motion_file)"/>
         </node>
 
+        <!-- Keyboard event for testing -->
         <node name="keyboard_events" type="keyboard_events.py" pkg="boxy_robot" output="screen">
             <param name="config_file" value="$(find boxy_robot)/config/perception_touch_conf.yaml" />
         </node>
         
+        <!-- Log -->
+        <node name="log" type="logger_node.py" pkg="shri_logger_node" output="screen">
+                <param name="log_path" value="~/darwin_log"/>
+        </node>
+
 </launch>
 
